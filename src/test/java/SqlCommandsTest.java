@@ -9,7 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class SqlCommandsTest {
 	@Mock
-	private SqlCommands sql;
+	private SqlCommandsImpl sql;
 
 	@BeforeEach
 	void init() {
