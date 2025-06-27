@@ -9,10 +9,12 @@ public class SqlCommandsImpl implements SqlCommands {
 	 */
 	public void createTableTODO() {
 		String sql = "CREATE TABLE IF NOT EXISTS todo ("
-					+"id INTEGER PRIMARY KEY AUTOINCREMENT," + "priority INTEGER,"
+					+"id INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+"priority INTEGER,"
+					+"name TEXT NOT NULL,"
 					+"note TEXT NOT NULL,"
-					+"editedDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP)"
-					+ "idFinished BOOLEAN NOT NULL CHECK (mycolumn IN (0, 1));";
+					+"editedDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+					+"isFinished BOOLEAN NOT NULL CHECK (idFinished IN (0, 1)));";
 
 		try (Connection conn = SqlDatenbankConnection.connect();
 				PreparedStatement pstmt = conn.prepareStatement(sql);) {
@@ -24,12 +26,14 @@ public class SqlCommandsImpl implements SqlCommands {
 	/**
 	 * Fügt der Tabelle todo Values hinzu (todo und priority)
 	 */
-	public void insertSqlDatenbank(String todo, int priority) {
-		String sql = "INSERT INTO todo (note, priority) VALUES (?, ?);";
+	public void newInsertSqlDatenbank(String note, int priority, String name) {
+		String sql = "INSERT INTO todo (name, note, priority, isFinished) VALUES (?, ?, ?, ?);";
 
 		try (Connection conn = SqlDatenbankConnection.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, todo);
-			pstmt.setInt(2, priority);
+			pstmt.setString(1, name);
+			pstmt.setString(2, note);
+			pstmt.setInt(3, priority);
+			pstmt.setBoolean(4, false);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
@@ -92,14 +96,49 @@ public class SqlCommandsImpl implements SqlCommands {
 			while (rs.next()) {
 				System.out.println("id = " + rs.getInt("id"));
 				System.out.println("priority = " + rs.getInt("priority"));
-
-				System.out.println("name = " + rs.getString("note"));
+				
+				System.out.println("name = " + rs.getString("name"));
+				System.out.println("note = " + rs.getString("note"));
 
 			}
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+	}
+	/**
+	 * Sotiert alle Notizen nach Priority: gibt Namen der Notiz(name(TEXT)), Notiz(note(TEXT)) und Priority aus
+	 */
+	public void sortByPriority() {
+		
+		String sql = "SELECT name, note, priority FROM todo ORDER BY priority DESC;";
+		
+		try(Connection conn = SqlDatenbankConnection.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)){
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				System.out.println(rs.getString("name") + ":\n" + rs.getString("note") + "\nPriority: " + rs.getString("priority"));
+			}
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+	}
+	/**
+	 * Gibt Namen der Notiz(name(TEXT)) und Notiz(note(TEXT)) selber aus
+	 */
+	public void selectNote(int id) {
+		
+		String sql = "";
+		try(Connection conn = SqlDatenbankConnection.connect(); PreparedStatement pstmt = conn.prepareStatement(sql);){
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				
+			}
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
 	}
 
 }
