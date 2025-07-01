@@ -6,6 +6,8 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import datenbank.SqlCommandsImpl;
+
 @ExtendWith(MockitoExtension.class)
 public class SqlCommandsTest {
 	@Mock
