@@ -10,13 +10,12 @@ public class Main {
 //		SqlCommandsImpl sqlCommands = new SqlCommandsImpl();
 //		
 //		sqlCommands.createTableTODO();
-//		
-//		
-//		TodoImpl t = new TodoImpl("Müll", "Papiermüll rausbringen", 5);
+	
+		TodoImpl t = new TodoImpl("Müll rausbringen", "Papiermüll rausbringen", 5);
 //		sqlCommands.newInsertSqlDatenbank(t);
 		
 		MainGUI gui = new MainGUI();
-		gui.openWindow();
+		gui.openWindow(t);
 	}
 
 }
