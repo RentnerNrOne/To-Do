@@ -59,6 +59,7 @@ public class MainGUI {
 		namenTodo.setFont(new Font("Arial", Font.BOLD, 25));
 		
 		editTodo.addActionListener(e -> secondFrame.secondFrame());
+		//editTodo.addActionListener(e -> (secondFrame.secondFrame()) && );
 		
 		panel.setBorder(new LineBorder(Color.BLACK, 2));
 		panel.setBounds(100, 100, 80, 80);
