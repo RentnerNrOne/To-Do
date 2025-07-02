@@ -33,8 +33,9 @@ public class MainGUI {
 
 	public JButton addButton(JFrame mainFrame) {
 		JButton addButton = new JButton("+");
+		NewTodoGUI newTodoFrame = new NewTodoGUI();
 		//noch ändern
-		addButton.addActionListener(e -> JOptionPane.showMessageDialog(mainFrame, "Test"));
+		addButton.addActionListener(e -> newTodoFrame.newTodoFrame());
 		addButton.setFont(new Font("Arial", Font.BOLD, 25));
 		addButton.setBounds(670, 900, 80, 80);
 		addButton.setSize(60, 60);
@@ -49,7 +50,7 @@ public class MainGUI {
 	}
 
 	public JPanel todoNameTextField(TodoImpl todo) {
-		EditTodoGUI secondFrame = new EditTodoGUI();
+		EditTodoGUI editFrame = new EditTodoGUI(todo);
 		
 		JPanel panel = new JPanel(new BorderLayout());
 		JButton editTodo = new JButton("x");
@@ -58,8 +59,8 @@ public class MainGUI {
 		editTodo.setFont(new Font("Arial", Font.BOLD, 25));
 		namenTodo.setFont(new Font("Arial", Font.BOLD, 25));
 		
-		editTodo.addActionListener(e -> secondFrame.secondFrame());
-		//editTodo.addActionListener(e -> (secondFrame.secondFrame()) && );
+		editTodo.addActionListener(e -> editFrame.editTodoFrame());
+		//editTodo.addActionListener(e -> (editFrame.editFrame(todo)) && );
 		
 		panel.setBorder(new LineBorder(Color.BLACK, 2));
 		panel.setBounds(100, 100, 80, 80);

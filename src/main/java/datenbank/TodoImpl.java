@@ -2,15 +2,25 @@ package datenbank;
 
 public class TodoImpl {
 	
-
 	private String name;
 	private String note;
 	private int priority;
+	private boolean isDone;
 
 	public TodoImpl(String name, String note, int priority) {
 		this.name = name;
 		this.note = note;
 		this.priority = priority;
+		isDone = false;
+	}
+	public TodoImpl(String name, String note, int priority, boolean isDone) {
+		this.name = name;
+		this.note = note;
+		this.priority = priority;
+		this.isDone = isDone;
+	}
+	public TodoImpl() {
+
 	}
 
 	

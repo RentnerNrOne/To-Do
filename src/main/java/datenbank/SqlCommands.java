@@ -1,5 +1,7 @@
 package datenbank;
 
+import java.util.List;
+
 public interface SqlCommands {
 	
 	/**
@@ -38,6 +40,6 @@ public interface SqlCommands {
 	/**
 	 * Gibt Namen der Notiz(name(TEXT)) und Notiz(note(TEXT)) selber aus
 	 */
-	public void selectNote(int id);
+	public TodoImpl selectNote(int id);
 	
 }

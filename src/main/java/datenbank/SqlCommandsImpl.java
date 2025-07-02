@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SqlCommandsImpl implements SqlCommands {
 
@@ -100,8 +102,8 @@ public class SqlCommandsImpl implements SqlCommands {
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				System.out.println(rs.getString("name") + ":\n" + rs.getString("note") + "\nPriority: "
-						+ rs.getString("priority"));
+				System.out.println(
+						rs.getString("name") + ":\n" + rs.getString("note") + "\nPriority: " + rs.getInt("priority"));
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -109,19 +111,31 @@ public class SqlCommandsImpl implements SqlCommands {
 
 	}
 
-	public void selectNote(int id) {
-
-		String sql = "";
+	public TodoImpl selectNote(int id) {
+		TodoImpl todo = new TodoImpl();
+		
+		String sql = "SELECT name, note, priority FROM todo WHERE id = ?;";
 		try (Connection conn = SqlDatenbankConnection.connect();
 				PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
+			
 			while (rs.next()) {
+				String name = rs.getString("name");
+				String note = rs.getString("note");
+				int priority = rs.getInt("priority");
+				todo.setName(name);
+				todo.setNote(note);
+				todo.setPriority(priority);
+				System.out.println(
+						rs.getString("name") + ":\n" + rs.getString("note") + "\nPriority: " + rs.getInt("priority"));
 
 			}
+			
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-
+		return todo;
 	}
 
 }

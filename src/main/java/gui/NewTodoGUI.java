@@ -8,31 +8,20 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import datenbank.SqlCommandsImpl;
-import datenbank.TodoImpl;
-
-public class EditTodoGUI {
-	JTextField textFieldName;
-	JTextArea textFieldTodoNote;
-	SqlCommandsImpl sqlCommands;
+public class NewTodoGUI {
 	
-	TodoImpl todo;
-	
-	
-	public EditTodoGUI(TodoImpl todo) {
-		this.todo = todo;
-		sqlCommands = new SqlCommandsImpl();
-	}
-	
-	public JFrame editTodoFrame() {
+	public JFrame newTodoFrame() {
 		JFrame secondFrame = new JFrame();
 		secondFrame.setSize(850, 1080);
 		secondFrame.setLayout(null);
 		
 		secondFrame.add(isDoneCheckbox());
-		secondFrame.add(todoNameTextField(todo));
-		secondFrame.add(todoNoteTextField(todo));
+		secondFrame.add(todoNameTextField());
+		secondFrame.add(todoNoteTextField());
 		secondFrame.add(saveButton(secondFrame));
+		
+		String noteText = todoNoteTextField().getText();
+		System.out.println(noteText);
 		
 		secondFrame.setVisible(true);
 		return secondFrame;
@@ -46,8 +35,8 @@ public class EditTodoGUI {
 		return isDoneCheckbox;
 	}	
 	//Objekt muss noch hinzugefügt werden
-	public JTextField todoNameTextField(TodoImpl todo) {
-		textFieldName = new JTextField(todo.getName());
+	public JTextField todoNameTextField() {
+		JTextField textFieldName = new JTextField();
 		
 		textFieldName.setBounds(110, 110, 80, 80);
 		textFieldName.setSize(450, 80);
@@ -55,8 +44,8 @@ public class EditTodoGUI {
 		return textFieldName;
 	}
 	//Objekt muss noch hinzugefügt werden
-	public JTextArea todoNoteTextField(TodoImpl todo) {
-		textFieldTodoNote = new JTextArea(todo.getNote());
+	public JTextArea todoNoteTextField() {
+		JTextArea textFieldTodoNote = new JTextArea();
 		
 		textFieldTodoNote.setBounds(110, 280, 80, 80);
 		textFieldTodoNote.setSize(600, 120);
@@ -67,16 +56,11 @@ public class EditTodoGUI {
 	public JButton saveButton(JFrame secondFrame) {
 		JButton saveButton = new JButton("<html><b><font size='25'>Save</font></b></html>");
 		
-		saveButton.addActionListener(e -> {
-			todo.setName(textFieldName.getText());
-			todo.setNote(textFieldTodoNote.getText());
-			sqlCommands.editSpalteDatenbank(3, todo);
-			secondFrame.dispose();
-		});
+		//saveButton.addActionListener(e -> () && (secondFrame.dispose()));
+		saveButton.addActionListener(e -> secondFrame.dispose());
 		saveButton.setBounds(110, 800, 80, 80);
 		saveButton.setSize(600, 100);
 		return saveButton;
 	}
-
 
 }
