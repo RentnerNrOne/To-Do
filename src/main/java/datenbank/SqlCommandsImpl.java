@@ -13,7 +13,7 @@ public class SqlCommandsImpl implements SqlCommands {
 		String sql = "CREATE TABLE IF NOT EXISTS todo (" + "id INTEGER PRIMARY KEY AUTOINCREMENT," + "priority INTEGER,"
 				+ "name TEXT NOT NULL," + "note TEXT NOT NULL,"
 				+ "editedDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,"
-				+ "isFinished BOOLEAN NOT NULL CHECK (isFinished IN (0, 1)));";
+				+ "isDone BOOLEAN NOT NULL CHECK (isDone IN (0, 1)));";
 
 		try (Connection conn = SqlDatenbankConnection.connect();
 				PreparedStatement pstmt = conn.prepareStatement(sql);) {
@@ -24,13 +24,13 @@ public class SqlCommandsImpl implements SqlCommands {
 	}
 
 	public void newInsertSqlDatenbank(TodoImpl t) {
-		String sql = "INSERT INTO todo (name, note, priority, isFinished) VALUES (?, ?, ?, ?);";
+		String sql = "INSERT INTO todo (name, note, priority, isDone) VALUES (?, ?, ?, ?);";
 
 		try (Connection conn = SqlDatenbankConnection.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, t.getName());
 			pstmt.setString(2, t.getNote());
 			pstmt.setInt(3, t.getPriority());
-			pstmt.setBoolean(4, false);
+			pstmt.setBoolean(4, t.getIsDone());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
@@ -38,13 +38,15 @@ public class SqlCommandsImpl implements SqlCommands {
 	}
 
 	public void editSpalteDatenbank(int id, TodoImpl t) {
-		String sql = "UPDATE todo SET note = ?, priority = ? WHERE id = ?;";
+		String sql = "UPDATE todo SET name = ?, note = ?, priority = ?, isDone = ? WHERE id = ?;";
 
 		try (Connection conn = SqlDatenbankConnection.connect();
 				PreparedStatement pstmt = conn.prepareStatement(sql);) {
-			pstmt.setString(1, t.getNote());
-			pstmt.setInt(2, t.getPriority());
-			pstmt.setInt(3, id);
+			pstmt.setString(1, t.getName());
+			pstmt.setString(2, t.getNote());
+			pstmt.setInt(3, t.getPriority());
+			pstmt.setBoolean(4, t.getIsDone());
+			pstmt.setInt(5, id);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -52,7 +54,7 @@ public class SqlCommandsImpl implements SqlCommands {
 	}
 
 	public void todoIsFinished(int id) {
-		String sql = "UPDATE todo set isFinished = ? WHERE id = ?;";
+		String sql = "UPDATE todo set isDone = ? WHERE id = ?;";
 
 		try (Connection conn = SqlDatenbankConnection.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setBoolean(1, true);
@@ -114,7 +116,7 @@ public class SqlCommandsImpl implements SqlCommands {
 	public TodoImpl selectNote(int id) {
 		TodoImpl todo = new TodoImpl();
 		
-		String sql = "SELECT name, note, priority FROM todo WHERE id = ?;";
+		String sql = "SELECT name, note, priority, isDone FROM todo WHERE id = ?;";
 		try (Connection conn = SqlDatenbankConnection.connect();
 				PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setInt(1, id);
@@ -124,8 +126,10 @@ public class SqlCommandsImpl implements SqlCommands {
 				String name = rs.getString("name");
 				String note = rs.getString("note");
 				int priority = rs.getInt("priority");
+				boolean isDone = rs.getBoolean("isDone");
 				todo.setName(name);
 				todo.setNote(note);
+				todo.setIsDone(isDone);
 				todo.setPriority(priority);
 				System.out.println(
 						rs.getString("name") + ":\n" + rs.getString("note") + "\nPriority: " + rs.getInt("priority"));

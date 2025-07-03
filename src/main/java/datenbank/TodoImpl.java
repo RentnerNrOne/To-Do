@@ -1,7 +1,7 @@
 package datenbank;
 
 public class TodoImpl {
-	
+
 	private String name;
 	private String note;
 	private int priority;
@@ -11,19 +11,19 @@ public class TodoImpl {
 		this.name = name;
 		this.note = note;
 		this.priority = priority;
-		isDone = false;
 	}
+
 	public TodoImpl(String name, String note, int priority, boolean isDone) {
 		this.name = name;
 		this.note = note;
 		this.priority = priority;
 		this.isDone = isDone;
 	}
+
 	public TodoImpl() {
 
 	}
 
-	
 	public String getName() {
 		return name;
 	}
@@ -46,6 +46,15 @@ public class TodoImpl {
 
 	public void setPriority(int priority) {
 		this.priority = priority;
+	}
+
+	public boolean getIsDone() {
+		return isDone;
+	}
+
+	public void setIsDone(boolean isDone) {
+
+		this.isDone = isDone;
 	}
 
 }
