@@ -21,8 +21,8 @@ public class MainGUI {
 	int posY;
 	public MainGUI() {
 		sqlCommands = new SqlCommandsImpl();
-		posX = 625;
-		posY = 60;
+		posX = 80;
+		posY = 80;
 	}
 
 	public void openWindow(TodoImpl t) {
@@ -33,9 +33,10 @@ public class MainGUI {
 
 		mainFrame.add(addButton(mainFrame));
 
-		for (int x = 0; x <= sqlCommands.sortByPriority().size(); x++) {
+		for (int x = 0; x <= sqlCommands.sortByPriority().size() -1; x++){
 			//mainFrame.add(todoNameTextField(sqlCommands.sortByPriority().get(x)), posX, posY);
-			mainFrame.add(todoNameTextField(sqlCommands.sortByPriority().get(x)));
+			mainFrame.add(todoNameTextField(sqlCommands.sortByPriority().get(x), posY));
+			posY = posY + 80;
 		}
 		//mainFrame.add(todoNameTextField(t));
 		
@@ -48,25 +49,23 @@ public class MainGUI {
 		//noch ändern
 		addButton.addActionListener(e -> newTodoFrame.newTodoFrame());
 		addButton.setFont(new Font("Arial", Font.BOLD, 25));
-		addButton.setBounds(670, 900, 80, 80);
-		addButton.setSize(60, 60);
+		addButton.setBounds(670, 900, 60, 60);
 		return addButton;
 	}
 	
 	public JTextField todoTextField() {
 		JTextField todoTextField = new JTextField("Test");
-		todoTextField.setBounds(100, 100, 80, 80);
-		todoTextField.setSize(625, 150);
+		todoTextField.setBounds(100, 100, 625, 150);
 		return todoTextField;
 	}
 
-	public JPanel todoNameTextField(TodoImpl todo) {
+	public JPanel todoNameTextField(TodoImpl todo, int posY) {
 		EditTodoGUI editFrame = new EditTodoGUI(todo);
 		
 		JPanel panel = new JPanel(new BorderLayout());
 		JButton editTodo = new JButton("x");
 		JLabel namenTodo = new JLabel(todo.getName());
-		
+		 
 		editTodo.setFont(new Font("Arial", Font.BOLD, 25));
 		namenTodo.setFont(new Font("Arial", Font.BOLD, 25));
 		
@@ -74,8 +73,7 @@ public class MainGUI {
 		//editTodo.addActionListener(e -> (editFrame.editFrame(todo)) && );
 		
 		panel.setBorder(new LineBorder(Color.BLACK, 2));
-		panel.setBounds(100, 100, posX, posY);
-		//panel.setSize(625, 60);
+		panel.setBounds(posX, posY, 625, 60);
 		
 		panel.add(editTodo, BorderLayout.EAST);
 		panel.add(namenTodo, BorderLayout.WEST);
