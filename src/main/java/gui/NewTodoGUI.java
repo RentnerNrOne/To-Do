@@ -17,7 +17,7 @@ public class NewTodoGUI {
 	JCheckBox isDoneCheckbox;
 	JSlider prioritySlider;
 	TodoImpl todo;
-	
+
 	int min;
 	int max;
 
@@ -28,6 +28,8 @@ public class NewTodoGUI {
 		sqlCommands = new SqlCommandsImpl();
 
 	}
+
+
 
 	public JFrame newTodoFrame() {
 		JFrame secondFrame = new JFrame();
@@ -70,7 +72,7 @@ public class NewTodoGUI {
 	}
 
 	public JSlider prioritySlider() {
-		prioritySlider = new JSlider(JSlider.HORIZONTAL,min, max, 2);
+		prioritySlider = new JSlider(JSlider.HORIZONTAL, min, max, 2);
 		prioritySlider.setMajorTickSpacing(1);
 
 		prioritySlider.setBounds(120, 380, 600, 120);

@@ -35,7 +35,7 @@ public interface SqlCommands {
 	/**
 	 * Sotiert alle Notizen nach Priority: gibt Namen der Notiz(name(TEXT)), Notiz(note(TEXT)) und Priority aus
 	 */
-	public void sortByPriority();
+	public List<TodoImpl> sortByPriority();
 	
 	/**
 	 * Gibt Namen der Notiz(name(TEXT)) und Notiz(note(TEXT)) selber aus

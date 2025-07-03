@@ -17,7 +17,7 @@ public class EditTodoGUI {
 	JCheckBox isDoneCheckbox;
 	JSlider prioritySlider;
 	TodoImpl todo;
-	
+
 	int min;
 	int max;
 
@@ -89,7 +89,6 @@ public class EditTodoGUI {
 			todo.setName(textFieldName.getText());
 			todo.setNote(textFieldTodoNote.getText());
 			todo.setPriority(prioritySlider.getValue());
-			System.out.println(isDoneCheckbox.isSelected());
 			todo.setIsDone(isDoneCheckbox.isSelected());
 			int id = 2;
 			sqlCommands.editSpalteDatenbank(id, todo);

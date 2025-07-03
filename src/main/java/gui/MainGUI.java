@@ -7,15 +7,23 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
+import datenbank.SqlCommandsImpl;
 import datenbank.TodoImpl;
 
 
 public class MainGUI {
+	SqlCommandsImpl sqlCommands;
+	int posX;
+	int posY;
+	public MainGUI() {
+		sqlCommands = new SqlCommandsImpl();
+		posX = 625;
+		posY = 60;
+	}
 
 	public void openWindow(TodoImpl t) {
 		JFrame mainFrame = new JFrame();
@@ -25,8 +33,11 @@ public class MainGUI {
 
 		mainFrame.add(addButton(mainFrame));
 
-		//mainFrame.add(todoTextField());
-		mainFrame.add(todoNameTextField(t));
+		for (int x = 0; x <= sqlCommands.sortByPriority().size(); x++) {
+			//mainFrame.add(todoNameTextField(sqlCommands.sortByPriority().get(x)), posX, posY);
+			mainFrame.add(todoNameTextField(sqlCommands.sortByPriority().get(x)));
+		}
+		//mainFrame.add(todoNameTextField(t));
 		
 		mainFrame.setVisible(true);
 	}
@@ -63,8 +74,8 @@ public class MainGUI {
 		//editTodo.addActionListener(e -> (editFrame.editFrame(todo)) && );
 		
 		panel.setBorder(new LineBorder(Color.BLACK, 2));
-		panel.setBounds(100, 100, 80, 80);
-		panel.setSize(625, 60);
+		panel.setBounds(100, 100, posX, posY);
+		//panel.setSize(625, 60);
 		
 		panel.add(editTodo, BorderLayout.EAST);
 		panel.add(namenTodo, BorderLayout.WEST);
