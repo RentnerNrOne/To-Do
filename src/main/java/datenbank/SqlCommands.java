@@ -26,17 +26,15 @@ public interface SqlCommands {
 	 * Löscht Spalten über den Primary Key(id(int))
 	 */
 	public void deleteSpalteDatenbank(int id);
-
-	/**
-	 * Gibt alles aus der Datenbank aus
-	 */
-	public void selectAllDatenbank();
 	
 	/**
 	 * Sotiert alle Notizen nach Priority: gibt Namen der Notiz(name(TEXT)), Notiz(note(TEXT)) und Priority aus
 	 */
-	public List<TodoImpl> sortByPriority();
+	public List<TodoImpl> sortByPriorityASC();
+	public List<TodoImpl> sortByPriorityDESC();
 	
+	public List<TodoImpl> sortWherePriority(int priority);
+
 	/**
 	 * Gibt Namen der Notiz(name(TEXT)) und Notiz(note(TEXT)) selber aus
 	 */

@@ -76,29 +76,33 @@ public class SqlCommandsImpl implements SqlCommands {
 		}
 	}
 
-	public void selectAllDatenbank() {
-		String sql = "SELECT * FROM todo;";
+	public List<TodoImpl> sortByPriorityASC() {
+		List<TodoImpl> todoList = new ArrayList<TodoImpl>();
+		String sql = "SELECT id, name, note, priority, isDone FROM todo ORDER BY priority ASC, isDone ASC;";
 
 		try (Connection conn = SqlDatenbankConnection.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
 			ResultSet rs = pstmt.executeQuery();
+
 			while (rs.next()) {
-				System.out.println("id = " + rs.getInt("id"));
-				System.out.println("priority = " + rs.getInt("priority"));
+				TodoImpl todo = new TodoImpl();
+				todo.setName(rs.getString("name"));
+				todo.setNote(rs.getString("note"));
+				todo.setPriority(rs.getInt("priority"));
+				todo.setIsDone(rs.getBoolean("isDone"));
+				todo.setId(rs.getInt("id"));
 
-				System.out.println("name = " + rs.getString("name"));
-				System.out.println("note = \n" + rs.getString("note"));
-
+				todoList.add(todo);
 			}
-
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+		return todoList;
+
 	}
 
-	public List<TodoImpl> sortByPriority() {
+	public List<TodoImpl> sortByPriorityDESC() {
 		List<TodoImpl> todoList = new ArrayList<TodoImpl>();
-		String sql = "SELECT id, name, note, priority, isDone FROM todo ORDER BY priority DESC, isDone ASC;";
+		String sql = "SELECT id, name, note, priority, isDone FROM todo ORDER BY priority DESC, isDone DESC;";
 
 		try (Connection conn = SqlDatenbankConnection.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			ResultSet rs = pstmt.executeQuery();
@@ -112,8 +116,6 @@ public class SqlCommandsImpl implements SqlCommands {
 				todo.setId(rs.getInt("id"));
 				
 				todoList.add(todo);
-//				System.out.println(
-//						rs.getString("name") + ":\n" + rs.getString("note") + "\nPriority: " + rs.getInt("priority"));
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -121,16 +123,39 @@ public class SqlCommandsImpl implements SqlCommands {
 		return todoList;
 
 	}
+	public List<TodoImpl> sortWherePriority(int priority) {
+		List<TodoImpl> todoList = new ArrayList<TodoImpl>();
+		String sql = "SELECT id, name, note, priority, isDone FROM todo WHERE priority = ? ORDER BY isDone DESC;";
 
+		try (Connection conn = SqlDatenbankConnection.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			ResultSet rs = pstmt.executeQuery();
+			pstmt.setInt(1, priority);
+
+			while (rs.next()) {
+				TodoImpl todo = new TodoImpl();
+				todo.setName(rs.getString("name"));
+				todo.setNote(rs.getString("note"));
+				todo.setPriority(rs.getInt("priority"));
+				todo.setIsDone(rs.getBoolean("isDone"));
+				todo.setId(rs.getInt("id"));
+				
+				todoList.add(todo);
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return todoList;
+
+	}
 	public TodoImpl selectNote(int id) {
 		TodoImpl todo = new TodoImpl();
-		
+
 		String sql = "SELECT name, note, priority, isDone FROM todo WHERE id = ?;";
 		try (Connection conn = SqlDatenbankConnection.connect();
 				PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
-			
+
 			while (rs.next()) {
 				String name = rs.getString("name");
 				String note = rs.getString("note");
@@ -140,15 +165,13 @@ public class SqlCommandsImpl implements SqlCommands {
 				todo.setNote(note);
 				todo.setIsDone(isDone);
 				todo.setPriority(priority);
-				//System.out.println(
-				//		rs.getString("name") + ":\n" + rs.getString("note") + "\nPriority: " + rs.getInt("priority"));
-
 			}
-			
+
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 		return todo;
 	}
+
 
 }
