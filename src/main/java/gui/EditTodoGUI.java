@@ -11,19 +11,19 @@ import datenbank.SqlCommandsImpl;
 import datenbank.TodoImpl;
 
 public class EditTodoGUI {
-	SqlCommandsImpl sqlCommands;
-	JTextField textFieldName;
-	JTextArea textFieldTodoNote;
-	JCheckBox isDoneCheckbox;
-	JSlider prioritySlider;
-	TodoImpl todo;
+	private	SqlCommandsImpl sqlCommands;
+	private JTextField textFieldName;
+	private JTextArea textFieldTodoNote;
+	private JCheckBox isDoneCheckbox;
+	private JSlider prioritySlider;
+	private TodoImpl todo;
 
-	int min;
-	int max;
+	private int min;
+	private int max;
 
 	public EditTodoGUI(TodoImpl todo) {
 		min = 1;
-		max = 2;
+		max = 3;
 		this.todo = todo;
 		sqlCommands = new SqlCommandsImpl();
 	}
@@ -71,7 +71,7 @@ public class EditTodoGUI {
 	}
 
 	public JSlider prioritySlider(TodoImpl todo) {
-		prioritySlider = new JSlider(JSlider.HORIZONTAL, 1, 3, todo.getPriority());
+		prioritySlider = new JSlider(JSlider.HORIZONTAL, min, max, todo.getPriority());
 		prioritySlider.setMajorTickSpacing(1);
 
 		prioritySlider.setBounds(120, 380, 600, 120);
@@ -90,8 +90,7 @@ public class EditTodoGUI {
 			todo.setNote(textFieldTodoNote.getText());
 			todo.setPriority(prioritySlider.getValue());
 			todo.setIsDone(isDoneCheckbox.isSelected());
-			int id = 2;
-			sqlCommands.editSpalteDatenbank(id, todo);
+			sqlCommands.editSpalteDatenbank(todo.getId(), todo);
 			secondFrame.dispose();
 
 			System.out.println("TODO bearbeitet");

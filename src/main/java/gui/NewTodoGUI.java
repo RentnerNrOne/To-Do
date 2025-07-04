@@ -11,15 +11,15 @@ import datenbank.SqlCommandsImpl;
 import datenbank.TodoImpl;
 
 public class NewTodoGUI {
-	SqlCommandsImpl sqlCommands;
-	JTextField textFieldName;
-	JTextArea textFieldTodoNote;
-	JCheckBox isDoneCheckbox;
-	JSlider prioritySlider;
-	TodoImpl todo;
+	private	SqlCommandsImpl sqlCommands;
+	private JTextField textFieldName;
+	private JTextArea textFieldTodoNote;
+	private JCheckBox isDoneCheckbox;
+	private JSlider prioritySlider;
+	private TodoImpl todo;
 
-	int min;
-	int max;
+	private int min;
+	private int max;
 
 	public NewTodoGUI() {
 		min = 1;

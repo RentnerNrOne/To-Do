@@ -18,7 +18,7 @@ public class Main {
 		//sqlCommands.editSpalteDatenbank(7, sqlCommands.selectNote(7));
 		
 		MainGUI gui = new MainGUI();
-		gui.openWindow(sqlCommands.sortByPriority().get(1));
+		gui.openWindow();
 	}
 
 }

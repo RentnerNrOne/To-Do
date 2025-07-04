@@ -7,6 +7,10 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -24,8 +28,10 @@ public class MainGUI {
 		posX = 80;
 		posY = 80;
 	}
+	
 
-	public void openWindow(TodoImpl t) {
+
+	public void openWindow() {
 		JFrame mainFrame = new JFrame();
 		mainFrame.setSize(850, 1080);
 		
@@ -42,6 +48,7 @@ public class MainGUI {
 		
 		mainFrame.setVisible(true);
 	}
+	
 
 	public JButton addButton(JFrame mainFrame) {
 		JButton addButton = new JButton("+");
