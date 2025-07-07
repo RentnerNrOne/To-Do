@@ -75,11 +75,11 @@ public class MainGUI {
 		JMenuItem item5 = new JMenuItem("Priorität 3");
 
 		item1.addActionListener(e -> {test(sqlCommands.sortByPriorityDESC()); refreshTodos(todos);});
-		item2.addActionListener(e -> {test(sqlCommands.sortByPriorityDESC()); refreshTodos(todos);});
+		item2.addActionListener(e -> {test(sqlCommands.sortByPriorityASC()); refreshTodos(todos);});
 		
-		item4.addActionListener(e -> {refreshTodos(todos); test(sqlCommands.sortWherePriority(1));});
-		item3.addActionListener(e -> {refreshTodos(todos); test(sqlCommands.sortWherePriority(2));});
-		item5.addActionListener(e -> {refreshTodos(todos); test(sqlCommands.sortWherePriority(3));});
+		item3.addActionListener(e -> {test(sqlCommands.sortWherePriority(1)); refreshTodos(todos);});
+		item4.addActionListener(e -> {test(sqlCommands.sortWherePriority(2)); refreshTodos(todos);});
+		item5.addActionListener(e -> {test(sqlCommands.sortWherePriority(3)); refreshTodos(todos);});
 		
 		sortStatus.add(item1);
 		sortStatus.add(item2);

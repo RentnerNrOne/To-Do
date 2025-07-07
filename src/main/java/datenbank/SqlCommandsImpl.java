@@ -128,9 +128,8 @@ public class SqlCommandsImpl implements SqlCommands {
 		String sql = "SELECT id, name, note, priority, isDone FROM todo WHERE priority = ? ORDER BY isDone DESC;";
 
 		try (Connection conn = SqlDatenbankConnection.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			ResultSet rs = pstmt.executeQuery();
 			pstmt.setInt(1, priority);
-
+			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				TodoImpl todo = new TodoImpl();
 				todo.setName(rs.getString("name"));
