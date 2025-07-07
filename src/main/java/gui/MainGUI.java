@@ -2,7 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.util.List;
 
@@ -115,18 +115,25 @@ public class MainGUI {
 
 		JPanel panel = new JPanel(new BorderLayout());
 		JButton editTodo = new JButton("x");
+		JButton deleteTodo = new JButton("X");
 		JLabel namenTodo = new JLabel(todo.getName());
 
 		editTodo.setFont(new Font("Arial", Font.BOLD, 25));
+		deleteTodo.setFont(new Font("Arial", Font.BOLD, 25));
 		namenTodo.setFont(new Font("Arial", Font.BOLD, 25));
-
+		
 		editTodo.addActionListener(e -> editFrame.editTodoFrame());
 		// editTodo.addActionListener(e -> (editFrame.editFrame(todo)) && );
-
+		deleteTodo.addActionListener(e -> sqlCommands.deleteSpalteDatenbank(todo.getId()));
+		
 		panel.setBorder(new LineBorder(Color.BLACK, 2));
 		panel.setBounds(posX, posY, 625, 60);
+		
+	    JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5)); 
+	    buttonsPanel.add(editTodo);
+	    buttonsPanel.add(deleteTodo);
 
-		panel.add(editTodo, BorderLayout.EAST);
+		panel.add(buttonsPanel);
 		panel.add(namenTodo, BorderLayout.WEST);
 
 		return panel;
