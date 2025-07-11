@@ -38,59 +38,55 @@ public class MainGUI {
 
 		mainFrame.setLayout(null);
 
-		mainFrame.add(addButton());
 		mainFrame.add(menu());
-		test(sqlCommands.sortByPriorityDESC());
+		refreshTodos(sqlCommands.sortByPriorityDESC());
 
-//		for (int x = 0; x <= sqlCommands.sortByPriorityDESC().size() - 1; x++) {
-//
-//			mainFrame.add(todoNameTextField(sqlCommands.sortByPriorityDESC().get(x), posY));
-//			posY +=80;
-//		}
-
+		mainFrame.add(addButton());
 		mainFrame.setVisible(true);
 	}
-	//wichtig
-	public List<TodoImpl> test(List<TodoImpl> t){
-		todos = t;
-		for (int x = 0; x <= todos.size() - 1; x++) {
-			mainFrame.add(todoNameTextField(todos.get(x), posY));
-			posY +=80;
-		}
-		return todos;
-	}
+
 
 	public JMenuBar menu() {
 		JMenuBar menu = new JMenuBar();
 		menu.setBounds(0, 0, 850, 25);
-		
+
 		JMenu sortPrio = new JMenu("Filtern");
 		JMenu sortStatus = new JMenu("Sotieren");
-		
+
 		JMenuItem item1 = new JMenuItem("Absteigend");
 		JMenuItem item2 = new JMenuItem("Aufsteigend");
-		
+
 		JMenuItem item3 = new JMenuItem("Priorität 1");
 		JMenuItem item4 = new JMenuItem("Priorität 2");
 		JMenuItem item5 = new JMenuItem("Priorität 3");
 
-		item1.addActionListener(e -> {test(sqlCommands.sortByPriorityDESC()); refreshTodos(todos);});
-		item2.addActionListener(e -> {test(sqlCommands.sortByPriorityASC()); refreshTodos(todos);});
-		
-		item3.addActionListener(e -> {test(sqlCommands.sortWherePriority(1)); refreshTodos(todos);});
-		item4.addActionListener(e -> {test(sqlCommands.sortWherePriority(2)); refreshTodos(todos);});
-		item5.addActionListener(e -> {test(sqlCommands.sortWherePriority(3)); refreshTodos(todos);});
-		
+		item1.addActionListener(e -> {
+			refreshTodos(sqlCommands.sortByPriorityDESC());
+		});
+		item2.addActionListener(e -> {
+			refreshTodos(sqlCommands.sortByPriorityASC());
+		});
+
+		item3.addActionListener(e -> {
+			refreshTodos(sqlCommands.sortWherePriority(1));
+		});
+		item4.addActionListener(e -> {
+			refreshTodos(sqlCommands.sortWherePriority(2));
+		});
+		item5.addActionListener(e -> {
+			refreshTodos(sqlCommands.sortWherePriority(3));
+		});
+
 		sortStatus.add(item1);
 		sortStatus.add(item2);
-		
+
 		sortPrio.add(item3);
 		sortPrio.add(item4);
 		sortPrio.add(item5);
-		
+
 		menu.add(sortPrio);
 		menu.add(sortStatus);
-		
+
 		return menu;
 	}
 
@@ -121,23 +117,24 @@ public class MainGUI {
 		editTodo.setFont(new Font("Arial", Font.BOLD, 25));
 		deleteTodo.setFont(new Font("Arial", Font.BOLD, 25));
 		namenTodo.setFont(new Font("Arial", Font.BOLD, 25));
-		
+
 		editTodo.addActionListener(e -> editFrame.editTodoFrame());
 		// editTodo.addActionListener(e -> (editFrame.editFrame(todo)) && );
 		deleteTodo.addActionListener(e -> sqlCommands.deleteSpalteDatenbank(todo.getId()));
-		
+
 		panel.setBorder(new LineBorder(Color.BLACK, 2));
 		panel.setBounds(posX, posY, 625, 60);
-		
-	    JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5)); 
-	    buttonsPanel.add(editTodo);
-	    buttonsPanel.add(deleteTodo);
+
+		JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+		buttonsPanel.add(editTodo);
+		buttonsPanel.add(deleteTodo);
 
 		panel.add(buttonsPanel);
 		panel.add(namenTodo, BorderLayout.WEST);
 
 		return panel;
 	}
+
 	private void refreshTodos(List<TodoImpl> todos) {
 		// Remove old todo panels
 		mainFrame.getContentPane().removeAll();
