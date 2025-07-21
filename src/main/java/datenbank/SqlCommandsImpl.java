@@ -160,10 +160,12 @@ public class SqlCommandsImpl implements SqlCommands {
 				String note = rs.getString("note");
 				int priority = rs.getInt("priority");
 				boolean isDone = rs.getBoolean("isDone");
+				String time = rs.getString("editDate");
 				todo.setName(name);
 				todo.setNote(note);
 				todo.setIsDone(isDone);
 				todo.setPriority(priority);
+				todo.setTime(time);
 			}
 
 		} catch (SQLException e) {

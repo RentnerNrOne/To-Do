@@ -3,12 +3,14 @@ package gui;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JProgressBar;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import datenbank.SqlCommandsImpl;
 import datenbank.TodoImpl;
+import export.ExportInJSON;
 
 public class EditTodoGUI {
 	private	SqlCommandsImpl sqlCommands;
@@ -17,6 +19,7 @@ public class EditTodoGUI {
 	private JCheckBox isDoneCheckbox;
 	private JSlider prioritySlider;
 	private TodoImpl todo;
+	private ExportInJSON exportJSON;
 
 	private int min;
 	private int max;
@@ -26,6 +29,7 @@ public class EditTodoGUI {
 		max = 3;
 		this.todo = todo;
 		sqlCommands = new SqlCommandsImpl();
+		exportJSON = new ExportInJSON();
 	}
 
 	public JFrame editTodoFrame() {
@@ -38,6 +42,8 @@ public class EditTodoGUI {
 		secondFrame.add(todoNoteTextField(todo));
 		secondFrame.add(prioritySlider(todo));
 		secondFrame.add(saveButton(secondFrame));
+		secondFrame.add(exportButton());
+		secondFrame.add(progressBar());
 
 		secondFrame.setVisible(true);
 		return secondFrame;
@@ -80,6 +86,27 @@ public class EditTodoGUI {
 		prioritySlider.setPaintLabels(true);
 		prioritySlider.setSnapToTicks(true);
 		return prioritySlider;
+	}
+	
+	public JButton exportButton() {
+		JButton exportButton = new JButton("<html><b><font size='20'>Export</font></b></html>");
+		
+		exportButton.setBounds(250, 500, 350, 100);
+		exportButton.addActionListener(e -> {
+		
+			exportJSON.exportInJSON(todo);
+			
+		});
+		
+		return exportButton;
+	}
+	public JProgressBar progressBar() {
+		JProgressBar progressBar = new JProgressBar();
+		progressBar.setBounds(225, 650, 400, 50);
+		
+		
+		
+		return progressBar;
 	}
 
 	public JButton saveButton(JFrame secondFrame) {
