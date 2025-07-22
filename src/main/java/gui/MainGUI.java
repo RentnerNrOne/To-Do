@@ -13,21 +13,23 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
 import datenbank.SqlCommandsImpl;
 import datenbank.TodoImpl;
+import time.TimeImpl;
 
 public class MainGUI {
 	private List<TodoImpl> todos;
 	private JFrame mainFrame;
 	private SqlCommandsImpl sqlCommands;
+	private TimeImpl time;
 	private int posX;
 	private int posY;
 
 	public MainGUI() {
 		sqlCommands = new SqlCommandsImpl();
+		time = new TimeImpl();
 		posX = 80;
 		posY = 100;
 	}
@@ -100,11 +102,6 @@ public class MainGUI {
 		return addButton;
 	}
 
-	public JTextField todoTextField() {
-		JTextField todoTextField = new JTextField("Test");
-		todoTextField.setBounds(100, 100, 625, 150);
-		return todoTextField;
-	}
 
 	public JPanel todoNameTextField(TodoImpl todo, int posY) {
 		EditTodoGUI editFrame = new EditTodoGUI(todo);
@@ -131,7 +128,13 @@ public class MainGUI {
 
 		panel.add(buttonsPanel);
 		panel.add(namenTodo, BorderLayout.WEST);
-
+		
+		System.out.println(time.isTimeOver(todo.getTime()));
+		
+		if(time.isTimeOver(todo.getTime())){
+			panel.setBackground(Color.red);	
+		}
+		
 		return panel;
 	}
 

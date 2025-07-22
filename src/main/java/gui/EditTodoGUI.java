@@ -43,7 +43,7 @@ public class EditTodoGUI {
 		secondFrame.add(prioritySlider(todo));
 		secondFrame.add(saveButton(secondFrame));
 		secondFrame.add(exportButton());
-		secondFrame.add(progressBar());
+		
 
 		secondFrame.setVisible(true);
 		return secondFrame;
@@ -100,14 +100,7 @@ public class EditTodoGUI {
 		
 		return exportButton;
 	}
-	public JProgressBar progressBar() {
-		JProgressBar progressBar = new JProgressBar();
-		progressBar.setBounds(225, 650, 400, 50);
-		
-		
-		
-		return progressBar;
-	}
+
 
 	public JButton saveButton(JFrame secondFrame) {
 		JButton saveButton = new JButton("<html><b><font size='25'>Save</font></b></html>");
