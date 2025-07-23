@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class SqlCommandsImpl implements SqlCommands {
 	public void createTableTODO() {
 		String sql = "CREATE TABLE IF NOT EXISTS todo (" + "id INTEGER PRIMARY KEY AUTOINCREMENT," + "priority INTEGER,"
 				+ "name TEXT NOT NULL," + "note TEXT NOT NULL,"
-				+ "editedDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+				+ "editedDate TEXT NOT NULL,"
 				+ "isDone BOOLEAN NOT NULL CHECK (isDone IN (0, 1)));";
 
 		try (Connection conn = SqlDatenbankConnection.connect();
@@ -24,13 +25,14 @@ public class SqlCommandsImpl implements SqlCommands {
 	}
 
 	public void newInsertSqlDatenbank(TodoImpl t) {
-		String sql = "INSERT INTO todo (name, note, priority, isDone) VALUES (?, ?, ?, ?);";
+		String sql = "INSERT INTO todo (name, note, priority, isDone, editedDate) VALUES (?, ?, ?, ?, ?);";
 
 		try (Connection conn = SqlDatenbankConnection.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, t.getName());
 			pstmt.setString(2, t.getNote());
 			pstmt.setInt(3, t.getPriority());
 			pstmt.setBoolean(4, t.getIsDone());
+			pstmt.setString(5, t.getTime());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());

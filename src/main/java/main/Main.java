@@ -9,6 +9,8 @@ public class Main {
 	public static void main(String[] args) {
 		SqlCommandsImpl sqlCommands = new SqlCommandsImpl();
 		
+		sqlCommands.createTableTODO();
+		
 //		for(int x = 0; x == sqlCommands.sortByPriority().size() - 1; x++) {
 //			sqlCommands.sortByPriority().get(x);	
 //		}

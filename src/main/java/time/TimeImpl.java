@@ -8,7 +8,6 @@ public class TimeImpl implements Time {
     private boolean isOverdue;
 
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 
     public boolean isTimeOver(String timeString) {
@@ -19,9 +18,10 @@ public class TimeImpl implements Time {
         
         try {
             
-        	LocalDateTime parsedDate = LocalDateTime.parse(timeString, FORMATTER);
+        	LocalDateTime parsedDate = LocalDateTime.parse(timeString);
         	System.out.println(parsedDate);
-        	LocalDateTime overdueDate = parsedDate.plusMinutes(5);
+        	
+        	LocalDateTime overdueDate = parsedDate.plusMinutes(1);
         	System.out.println(overdueDate);
         	isOverdue = LocalDateTime.now().isAfter(overdueDate);
             
